@@ -139,10 +139,10 @@ export default function App() {
     setCurrentView("dashboard");
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setCurrentView("login");
-  };
+  // const handleLogout = () => {
+  //   setIsAuthenticated(false);
+  //   setCurrentView("login");
+  // };
 
   // Demo navigation menu
   const menuItems = [
