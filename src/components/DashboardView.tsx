@@ -30,7 +30,12 @@ interface DashboardViewProps {
   onShareClick: (doc: Document) => void;
 }
 
-export function DashboardView({ documents, onDocumentClick, onUploadClick, onShareClick }: DashboardViewProps) {
+export function DashboardView({
+  documents,
+  onDocumentClick,
+  onUploadClick,
+  onShareClick,
+}: DashboardViewProps) {
   const isEmpty = documents.length === 0;
 
   if (isEmpty) {
@@ -41,7 +46,9 @@ export function DashboardView({ documents, onDocumentClick, onUploadClick, onSha
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="mb-2">My Documents</h1>
-              <p className="text-muted-foreground">Securely store and verify your documents on the blockchain</p>
+              <p className="text-muted-foreground">
+                Securely store and verify your documents on the blockchain
+              </p>
             </div>
             <Button onClick={onUploadClick} className="gap-2">
               <UploadIcon size={20} />
@@ -60,7 +67,8 @@ export function DashboardView({ documents, onDocumentClick, onUploadClick, onSha
             </div>
             <h2 className="mb-4">No documents yet</h2>
             <p className="text-muted-foreground mb-8 text-center max-w-md">
-              Upload your first document to get started with secure, blockchain-verified storage
+              Upload your first document to get started with secure,
+              blockchain-verified storage
             </p>
             <Button onClick={onUploadClick} size="lg" className="gap-2">
               <UploadIcon size={20} />
@@ -80,7 +88,8 @@ export function DashboardView({ documents, onDocumentClick, onUploadClick, onSha
           <div>
             <h1 className="mb-2">My Documents</h1>
             <p className="text-muted-foreground">
-              {documents.length} document{documents.length !== 1 ? "s" : ""} securely stored
+              {documents.length} document{documents.length !== 1 ? "s" : ""}{" "}
+              securely stored
             </p>
           </div>
           <Button onClick={onUploadClick} className="gap-2">
@@ -134,16 +143,29 @@ export function DashboardView({ documents, onDocumentClick, onUploadClick, onSha
                   </DropdownMenu>
                 </div>
 
-                <h3 className="mb-2 truncate" onClick={() => onDocumentClick(doc)}>{doc.name}</h3>
-                <p className="text-muted-foreground mb-4">{doc.size} • {doc.type}</p>
+                <h3
+                  className="mb-2 truncate"
+                  onClick={() => onDocumentClick(doc)}
+                >
+                  {doc.name}
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  {doc.size} • {doc.type}
+                </p>
 
                 <div className="flex items-center gap-2 mb-4">
                   <Badge
-                    variant={doc.status === "verified" ? "default" : "secondary"}
+                    variant={
+                      doc.status === "verified" ? "default" : "secondary"
+                    }
                     className="gap-1"
                   >
                     {doc.status === "verified" && <VerifyIcon size={12} />}
-                    {doc.status === "verified" ? "Verified" : doc.status === "shared" ? "Shared" : "Pending"}
+                    {doc.status === "verified"
+                      ? "Verified"
+                      : doc.status === "shared"
+                      ? "Shared"
+                      : "Pending"}
                   </Badge>
                   {doc.shares > 0 && (
                     <Badge variant="outline" className="gap-1">

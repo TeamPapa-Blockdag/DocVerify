@@ -8,14 +8,13 @@ import { DocumentDetailView } from "./components/DocumentDetailView";
 import { ShareModal } from "./components/ShareModal";
 import { VerificationRequestScreen } from "./components/VerificationRequestScreen";
 import { PublicVerificationPage } from "./components/PublicVerificationPage";
-import { AuditTrailViewer} from "./components/AuditTrailViewer";
+import { AuditTrailViewer } from "./components/AuditTrailViewer";
 import { SecuritySettingsPage } from "./components/SecuritySettingsPage";
 import { EmailTemplate } from "./components/EmailTemplate";
 import { MarketingOnePager } from "./components/MarketingOnePager";
 import { UploadProgress } from "./components/UploadProgress";
 import { Button } from "./components/ui/button";
 import { Menu, X } from "lucide-react";
-
 
 type View =
   | "login"
@@ -42,12 +41,14 @@ interface Document {
 }
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<View>("login");
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
+  const [currentView, setCurrentView] = useState<View>("landing"); // Changed to "landing"
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>(
+    null
+  );
   const [showShareModal, setShowShareModal] = useState(false);
   const [showUploadProgress, setShowUploadProgress] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Uncommented this
 
   // Mock documents data
   const [documents, setDocuments] = useState<Document[]>([
@@ -58,7 +59,8 @@ export default function App() {
       uploadDate: "Oct 5, 2025",
       size: "2.4 MB",
       status: "verified",
-      blockchainHash: "0x7d8a9b2c1e4f5a6b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a3f2c",
+      blockchainHash:
+        "0x7d8a9b2c1e4f5a6b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a3f2c",
       shares: 3,
     },
     {
@@ -68,7 +70,8 @@ export default function App() {
       uploadDate: "Oct 3, 2025",
       size: "1.8 MB",
       status: "verified",
-      blockchainHash: "0x2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b",
+      blockchainHash:
+        "0x2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b",
       shares: 1,
     },
     {
@@ -78,7 +81,8 @@ export default function App() {
       uploadDate: "Oct 1, 2025",
       size: "1.2 MB",
       status: "shared",
-      blockchainHash: "0x9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c",
+      blockchainHash:
+        "0x9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c",
       shares: 5,
     },
   ]);
@@ -93,7 +97,13 @@ export default function App() {
     setShowShareModal(true);
   };
 
-  const handleShare = (data: any) => {
+  interface ShareData {
+    email: string;
+    permissions: string;
+    expiryDate?: string;
+  }
+
+  const handleShare = (data: ShareData) => {
     console.log("Sharing document with:", data);
     setShowShareModal(false);
   };
@@ -112,7 +122,8 @@ export default function App() {
       uploadDate: "Oct 10, 2025",
       size: "3.1 MB",
       status: "verified",
-      blockchainHash: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+      blockchainHash:
+        "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
       shares: 0,
     };
     setDocuments([newDoc, ...documents]);
@@ -135,9 +146,9 @@ export default function App() {
 
   // Demo navigation menu
   const menuItems = [
+    { label: "Landing Page", view: "landing" as View },
     { label: "Login Page", view: "login" as View },
     { label: "Signup Page", view: "signup" as View },
-    { label: "Landing Page", view: "landing" as View },
     { label: "Dashboard (Empty)", view: "dashboard" as View, empty: true },
     { label: "Dashboard (With Docs)", view: "dashboard" as View },
     { label: "Document Detail", view: "document-detail" as View },
@@ -163,7 +174,7 @@ export default function App() {
       {/* Demo Navigation Menu */}
       {showMenu && (
         <div className="fixed top-20 right-4 z-[100] bg-white rounded-xl shadow-2xl border p-4 w-64 max-h-[80vh] overflow-y-auto">
-          <h3 className="mb-4 pb-2 border-b">Demo Navigation</h3>
+          <h3 className="font-semibold mb-4 pb-2 border-b">Demo Navigation</h3>
           <div className="space-y-2">
             {menuItems.map((item, index) => (
               <Button
@@ -176,10 +187,16 @@ export default function App() {
                     setDocuments([]);
                     setCurrentView("dashboard");
                     setTimeout(() => setDocuments(tempDocs), 100);
-                  } else if (item.view === "document-detail" && documents.length > 0) {
+                  } else if (
+                    item.view === "document-detail" &&
+                    documents.length > 0
+                  ) {
                     setSelectedDocument(documents[0]);
                     setCurrentView(item.view);
-                  } else if (item.view === "audit-trail" && documents.length > 0) {
+                  } else if (
+                    item.view === "audit-trail" &&
+                    documents.length > 0
+                  ) {
                     setSelectedDocument(documents[0]);
                     setCurrentView(item.view);
                   } else {
@@ -196,6 +213,10 @@ export default function App() {
       )}
 
       {/* Main Content */}
+      {currentView === "landing" && (
+        <LandingPage onGetStarted={() => setCurrentView("signup")} />
+      )}
+
       {currentView === "login" && (
         <LoginPage
           onLogin={handleLogin}
@@ -208,10 +229,6 @@ export default function App() {
           onSignup={handleSignup}
           onLoginClick={() => setCurrentView("login")}
         />
-      )}
-
-      {currentView === "landing" && (
-        <LandingPage onGetStarted={() => setCurrentView("dashboard")} />
       )}
 
       {currentView === "dashboard" && (

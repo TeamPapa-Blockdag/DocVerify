@@ -1,18 +1,19 @@
 import { motion } from "motion/react";
 import { UploadIcon, ShareIcon, VerifyIcon } from "./icons";
 // import { UploadIcon, ShareIcon, VerifyIcon, BlockchainIcon } from "./icons";
-import { Shield, Zap, Lock, Globe, ArrowRight} from "lucide-react";
+import { Shield, Zap, Lock, Globe, ArrowRight } from "lucide-react";
 // import { Shield, Zap, Lock, Globe, ArrowRight, Check } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
 
 interface LandingPageProps {
-  onGetStarted: () => void;
+  // onGetStarted: () => void;
 }
 
-export function LandingPage({ onGetStarted }: LandingPageProps) {
+export function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
@@ -23,10 +24,27 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             <span className="text-xl">DocVerify</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
-            <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
-            <Button onClick={onGetStarted}>Get Started</Button>
+            <a
+              href="#features"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Features
+            </a>
+            <a
+              href="#how-it-works"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              How It Works
+            </a>
+            <a
+              href="#pricing"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Pricing
+            </a>
+            <Link to="/signup">
+              <Button>Get Started</Button>
+            </Link>
           </div>
         </div>
       </nav>
@@ -48,14 +66,17 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Store, share, and verify your important documents with blockchain-powered security.
-            Trusted by professionals, institutions, and employers worldwide.
+            Store, share, and verify your important documents with
+            blockchain-powered security. Trusted by professionals, institutions,
+            and employers worldwide.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" onClick={onGetStarted} className="gap-2">
-              Get Started Free
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            <Link to="/signup">
+              <Button size="lg" className="gap-2">
+                Get Started Free
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline">
               Watch Demo
             </Button>
@@ -100,19 +121,22 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               {
                 icon: <Shield className="w-8 h-8" />,
                 title: "Blockchain Security",
-                description: "Documents are permanently anchored on BlockDAG for tamper-proof verification",
+                description:
+                  "Documents are permanently anchored on BlockDAG for tamper-proof verification",
                 color: "bg-blue-100 text-blue-600",
               },
               {
                 icon: <Zap className="w-8 h-8" />,
                 title: "Instant Verification",
-                description: "Verify document authenticity in seconds, not days",
+                description:
+                  "Verify document authenticity in seconds, not days",
                 color: "bg-purple-100 text-purple-600",
               },
               {
                 icon: <Lock className="w-8 h-8" />,
                 title: "End-to-End Encryption",
-                description: "Your documents are encrypted and only accessible by you",
+                description:
+                  "Your documents are encrypted and only accessible by you",
                 color: "bg-green-100 text-green-600",
               },
               {
@@ -130,7 +154,9 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card className="p-6 h-full hover:shadow-lg transition-shadow">
-                  <div className={`w-16 h-16 rounded-xl ${feature.color} flex items-center justify-center mb-4`}>
+                  <div
+                    className={`w-16 h-16 rounded-xl ${feature.color} flex items-center justify-center mb-4`}
+                  >
                     {feature.icon}
                   </div>
                   <h3 className="mb-2">{feature.title}</h3>
@@ -163,19 +189,22 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 icon: <UploadIcon size={32} />,
                 step: "1",
                 title: "Upload Document",
-                description: "Upload your document securely. We encrypt it and create a unique blockchain hash.",
+                description:
+                  "Upload your document securely. We encrypt it and create a unique blockchain hash.",
               },
               {
                 icon: <VerifyIcon size={32} />,
                 step: "2",
                 title: "Blockchain Anchoring",
-                description: "Your document hash is anchored on BlockDAG, creating an immutable proof of authenticity.",
+                description:
+                  "Your document hash is anchored on BlockDAG, creating an immutable proof of authenticity.",
               },
               {
                 icon: <ShareIcon size={32} />,
                 step: "3",
                 title: "Share & Verify",
-                description: "Share with anyone. They can instantly verify authenticity using our blockchain verification.",
+                description:
+                  "Share with anyone. They can instantly verify authenticity using our blockchain verification.",
               },
             ].map((step, index) => (
               <motion.div
@@ -252,16 +281,29 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             viewport={{ once: true }}
           >
             <Card className="p-12 text-center bg-gradient-to-br from-blue-600 to-purple-600 border-0">
-              <h2 className="text-4xl mb-4 text-white">Ready to Get Started?</h2>
+              <h2 className="text-4xl mb-4 text-white">
+                Ready to Get Started?
+              </h2>
               <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Join thousands of professionals securing their documents on the blockchain
+                Join thousands of professionals securing their documents on the
+                blockchain
               </p>
               <div className="flex gap-4 justify-center">
-                <Button size="lg" variant="secondary" onClick={onGetStarted} className="gap-2">
-                  Start Free Trial
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-                <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+                <Link to="/signup">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="gap-2"
+                  >
+                    Start Free Trial
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+                >
                   Contact Sales
                 </Button>
               </div>
@@ -286,25 +328,61 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             <div>
               <h4 className="mb-4">Product</h4>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Security
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="mb-4">Company</h4>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Careers
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="mb-4">Legal</h4>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Privacy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Security
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
