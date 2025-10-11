@@ -1,19 +1,15 @@
 import { motion } from "motion/react";
 import { UploadIcon, ShareIcon, VerifyIcon } from "./icons";
-// import { UploadIcon, ShareIcon, VerifyIcon, BlockchainIcon } from "./icons";
 import { Shield, Zap, Lock, Globe, ArrowRight } from "lucide-react";
-// import { Shield, Zap, Lock, Globe, ArrowRight, Check } from "lucide-react";
-
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Link } from "react-router-dom";
 
 interface LandingPageProps {
-  // onGetStarted: () => void;
+  onGetStarted: () => void;
 }
 
-export function LandingPage() {
+export function LandingPage({ onGetStarted }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
@@ -42,9 +38,7 @@ export function LandingPage() {
             >
               Pricing
             </a>
-            <Link to="/signup">
-              <Button>Get Started</Button>
-            </Link>
+            <Button onClick={onGetStarted}>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -71,12 +65,10 @@ export function LandingPage() {
             and employers worldwide.
           </p>
           <div className="flex gap-4 justify-center">
-            <Link to="/signup">
-              <Button size="lg" className="gap-2">
-                Get Started Free
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+            <Button size="lg" className="gap-2" onClick={onGetStarted}>
+              Get Started Free
+              <ArrowRight className="w-4 h-4" />
+            </Button>
             <Button size="lg" variant="outline">
               Watch Demo
             </Button>
@@ -289,16 +281,15 @@ export function LandingPage() {
                 blockchain
               </p>
               <div className="flex gap-4 justify-center">
-                <Link to="/signup">
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="gap-2"
-                  >
-                    Start Free Trial
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="gap-2"
+                  onClick={onGetStarted}
+                >
+                  Start Free Trial
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
                 <Button
                   size="lg"
                   variant="outline"
