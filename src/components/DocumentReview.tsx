@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
-import { CheckCircle2, Download, ExternalLink, FileText, Shield, Clock, User, AlertCircle, Lock, ChevronDown, ChevronUp, Mail, KeyRound, RefreshCw } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { Badge } from './ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Separator } from './ui/separator';
-import { Alert, AlertDescription } from './ui/alert';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { toast } from 'sonner';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import { useState } from "react";
+import {
+  CheckCircle2,
+  Download,
+  ExternalLink,
+  FileText,
+  Shield,
+  Clock,
+  User,
+  AlertCircle,
+  Lock,
+  ChevronDown,
+  ChevronUp,
+  Mail,
+  KeyRound,
+  RefreshCw,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Separator } from "./ui/separator";
+import { Alert, AlertDescription } from "./ui/alert";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { toast } from "sonner";
 
 interface DocumentReviewPageProps {
   onBack?: () => void;
@@ -18,78 +35,81 @@ interface DocumentReviewPageProps {
 export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
   // Two-step verification states
   const [isTokenVerified, setIsTokenVerified] = useState(false);
-  const [tokenInput, setTokenInput] = useState('');
+  const [tokenInput, setTokenInput] = useState("");
   const [isVerifyingToken, setIsVerifyingToken] = useState(false);
-  const [tokenError, setTokenError] = useState('');
+  const [tokenError, setTokenError] = useState("");
   const [resendingToken, setResendingToken] = useState(false);
-  
+
   // Document view states
   const [showFullHash, setShowFullHash] = useState(false);
   const [showAuditTrail, setShowAuditTrail] = useState(false);
   const [verificationComplete, setVerificationComplete] = useState(false);
 
   // Mock data - would come from the verification link
-  const CORRECT_TOKEN = 'VERIFY-2024-XK9P-L3M7'; // This would be generated on the backend
-  const reviewerEmail = 'reviewer@example.com'; // Would come from the link
+  const CORRECT_TOKEN = "VERIFY-2024-XK9P-L3M7"; // This would be generated on the backend
+  const reviewerEmail = "reviewer@example.com"; // Would come from the link
 
   const document = {
-    name: 'Q4_Financial_Report_2024.pdf',
-    type: 'PDF Document',
-    size: '2.4 MB',
-    hash: 'a3f5d8b9c2e1f4a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1',
-    uploadDate: '2024-10-05 14:32:00 UTC',
-    blockchainStatus: 'Anchored on BlockDAG',
-    blockNumber: '1,234,567',
-    transactionId: 'tx_9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1',
+    name: "Q4_Financial_Report_2024.pdf",
+    type: "PDF Document",
+    size: "2.4 MB",
+    hash: "a3f5d8b9c2e1f4a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1",
+    uploadDate: "2024-10-05 14:32:00 UTC",
+    blockchainStatus: "Anchored on BlockDAG",
+    blockNumber: "1,234,567",
+    transactionId: "tx_9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1",
   };
 
   const sharedBy = {
-    name: 'Sarah Mitchell',
-    email: 's.mitchell@company.com',
-    role: 'Finance Director',
-    company: 'Acme Corporation',
-    avatar: 'https://i.pravatar.cc/150?img=5',
+    name: "Sarah Mitchell",
+    email: "s.mitchell@company.com",
+    role: "Finance Director",
+    company: "Acme Corporation",
+    avatar: "https://i.pravatar.cc/150?img=5",
   };
 
   const verificationMessage = {
-    subject: 'Document Verification Request',
-    message: 'Please review and verify this financial report. Your verification is needed for compliance purposes.',
-    sharedDate: '2024-10-11 09:15:00 UTC',
+    subject: "Document Verification Request",
+    message:
+      "Please review and verify this financial report. Your verification is needed for compliance purposes.",
+    sharedDate: "2024-10-11 09:15:00 UTC",
   };
 
   const auditTrail = [
     {
-      action: 'Document Uploaded',
-      timestamp: '2024-10-05 14:32:00 UTC',
-      user: 'Sarah Mitchell',
-      details: 'Original document uploaded to platform',
+      action: "Document Uploaded",
+      timestamp: "2024-10-05 14:32:00 UTC",
+      user: "Sarah Mitchell",
+      details: "Original document uploaded to platform",
     },
     {
-      action: 'Blockchain Anchored',
-      timestamp: '2024-10-05 14:32:15 UTC',
-      user: 'System',
-      details: 'Document hash anchored on BlockDAG',
+      action: "Blockchain Anchored",
+      timestamp: "2024-10-05 14:32:15 UTC",
+      user: "System",
+      details: "Document hash anchored on BlockDAG",
     },
     {
-      action: 'Verification Link Created',
-      timestamp: '2024-10-11 09:15:00 UTC',
-      user: 'Sarah Mitchell',
-      details: 'Shared with external reviewer',
+      action: "Verification Link Created",
+      timestamp: "2024-10-11 09:15:00 UTC",
+      user: "Sarah Mitchell",
+      details: "Shared with external reviewer",
     },
   ];
 
   const handleTokenVerification = () => {
     setIsVerifyingToken(true);
-    setTokenError('');
+    setTokenError("");
 
     // Simulate API call
     setTimeout(() => {
       if (tokenInput.trim().toUpperCase() === CORRECT_TOKEN) {
         setIsTokenVerified(true);
-        toast.success('Token verified successfully!');
+        toast.success("Token verified successfully!");
       } else {
-        setTokenError('Invalid verification token. Please check your email and try again.');
-        toast.error('Invalid token');
+        setTokenError(
+          "Invalid verification token. Please check your email and try again."
+        );
+        toast.error("Invalid token");
       }
       setIsVerifyingToken(false);
     }, 1000);
@@ -97,7 +117,7 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
 
   const handleResendToken = () => {
     setResendingToken(true);
-    
+
     // Simulate API call to resend token
     setTimeout(() => {
       toast.success(`Verification token resent to ${reviewerEmail}`);
@@ -107,11 +127,11 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
 
   const handleVerifyDocument = () => {
     setVerificationComplete(true);
-    toast.success('Document verified successfully!');
+    toast.success("Document verified successfully!");
   };
 
   const handleDownload = () => {
-    toast.info('Downloading document...');
+    toast.info("Downloading document...");
   };
 
   // Token Entry Screen
@@ -150,8 +170,9 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
               <Alert className="mb-6 bg-blue-500/10 border-blue-500/30">
                 <Mail className="h-5 w-5 text-blue-400" />
                 <AlertDescription className="text-blue-100 text-sm">
-                  A verification token has been sent to <strong>{reviewerEmail}</strong>. 
-                  Please check your email and enter the token below.
+                  A verification token has been sent to{" "}
+                  <strong>{reviewerEmail}</strong>. Please check your email and
+                  enter the token below.
                 </AlertDescription>
               </Alert>
 
@@ -170,10 +191,10 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                       value={tokenInput}
                       onChange={(e) => {
                         setTokenInput(e.target.value.toUpperCase());
-                        setTokenError('');
+                        setTokenError("");
                       }}
                       onKeyPress={(e) => {
-                        if (e.key === 'Enter' && tokenInput.trim()) {
+                        if (e.key === "Enter" && tokenInput.trim()) {
                           handleTokenVerification();
                         }
                       }}
@@ -246,9 +267,9 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                   <div>
                     <h3 className="text-white text-sm mb-1">Security Notice</h3>
                     <p className="text-gray-200 text-xs">
-                      This verification token is unique and time-limited. It ensures that only 
-                      authorized recipients can access the shared document. Never share this token 
-                      with anyone.
+                      This verification token is unique and time-limited. It
+                      ensures that only authorized recipients can access the
+                      shared document. Never share this token with anyone.
                     </p>
                   </div>
                 </div>
@@ -282,7 +303,8 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
           </div>
           <h1 className="text-white mb-2">Document Verification Request</h1>
           <p className="text-gray-300">
-            You've been invited to review and verify a blockchain-secured document
+            You've been invited to review and verify a blockchain-secured
+            document
           </p>
         </div>
 
@@ -299,7 +321,8 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
           <Alert className="mb-6 bg-green-500/20 border-green-500/50">
             <CheckCircle2 className="h-5 w-5 text-green-400" />
             <AlertDescription className="text-green-100">
-              Document verification completed successfully! The document integrity has been confirmed through blockchain verification.
+              Document verification completed successfully! The document
+              integrity has been confirmed through blockchain verification.
             </AlertDescription>
           </Alert>
         )}
@@ -315,7 +338,10 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
               <Avatar className="w-16 h-16">
                 <AvatarImage src={sharedBy.avatar} />
                 <AvatarFallback className="bg-blue-500 text-white">
-                  {sharedBy.name.split(' ').map(n => n[0]).join('')}
+                  {sharedBy.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
@@ -326,12 +352,16 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
               </div>
               <div className="text-right">
                 <p className="text-gray-300 text-sm">Shared on</p>
-                <p className="text-white text-sm">{verificationMessage.sharedDate}</p>
+                <p className="text-white text-sm">
+                  {verificationMessage.sharedDate}
+                </p>
               </div>
             </div>
             {verificationMessage.message && (
               <div className="mt-4 p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <p className="text-gray-300 text-sm italic">"{verificationMessage.message}"</p>
+                <p className="text-gray-300 text-sm italic">
+                  "{verificationMessage.message}"
+                </p>
               </div>
             )}
           </div>
@@ -344,33 +374,43 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
               <FileText className="w-5 h-5 text-blue-400" />
               Document Information
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Document Preview */}
               <div className="flex items-center justify-center bg-slate-900/50 rounded-lg p-8 border border-slate-700">
                 <div className="text-center">
                   <FileText className="w-24 h-24 text-blue-400 mx-auto mb-4" />
                   <p className="text-white mb-1">{document.name}</p>
-                  <p className="text-gray-400 text-sm">{document.type} • {document.size}</p>
+                  <p className="text-gray-400 text-sm">
+                    {document.type} • {document.size}
+                  </p>
                 </div>
               </div>
 
               {/* Document Details */}
               <div className="space-y-4">
                 <div>
-                  <label className="text-gray-300 text-sm block mb-1">Document Name</label>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    Document Name
+                  </label>
                   <p className="text-white">{document.name}</p>
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-1">Upload Date</label>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    Upload Date
+                  </label>
                   <p className="text-white">{document.uploadDate}</p>
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-1">File Size</label>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    File Size
+                  </label>
                   <p className="text-white">{document.size}</p>
                 </div>
                 <div>
-                  <label className="text-gray-300 text-sm block mb-1">File Type</label>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    File Type
+                  </label>
                   <p className="text-white">{document.type}</p>
                 </div>
               </div>
@@ -398,21 +438,31 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                  <label className="text-gray-300 text-sm block mb-1">Block Number</label>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    Block Number
+                  </label>
                   <p className="text-white">{document.blockNumber}</p>
                 </div>
                 <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                  <label className="text-gray-300 text-sm block mb-1">Transaction ID</label>
-                  <p className="text-white text-sm font-mono">{document.transactionId.substring(0, 20)}...</p>
+                  <label className="text-gray-300 text-sm block mb-1">
+                    Transaction ID
+                  </label>
+                  <p className="text-white text-sm font-mono">
+                    {document.transactionId.substring(0, 20)}...
+                  </p>
                 </div>
               </div>
 
               {/* Document Hash */}
               <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700">
-                <label className="text-gray-300 text-sm block mb-2">Document Hash (SHA-256)</label>
+                <label className="text-gray-300 text-sm block mb-2">
+                  Document Hash (SHA-256)
+                </label>
                 <div className="flex items-center gap-2">
                   <code className="text-blue-400 text-sm font-mono flex-1 break-all">
-                    {showFullHash ? document.hash : `${document.hash.substring(0, 32)}...`}
+                    {showFullHash
+                      ? document.hash
+                      : `${document.hash.substring(0, 32)}...`}
                   </code>
                   <Button
                     variant="ghost"
@@ -420,7 +470,11 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                     onClick={() => setShowFullHash(!showFullHash)}
                     className="text-blue-400 hover:text-blue-300 hover:bg-slate-700"
                   >
-                    {showFullHash ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    {showFullHash ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -431,9 +485,11 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                   <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-blue-100 text-sm">
-                      This document has been cryptographically secured and anchored on the BlockDAG blockchain. 
-                      The hash above is a unique fingerprint of the document. Any modification to the document 
-                      would result in a completely different hash, ensuring document integrity.
+                      This document has been cryptographically secured and
+                      anchored on the BlockDAG blockchain. The hash above is a
+                      unique fingerprint of the document. Any modification to
+                      the document would result in a completely different hash,
+                      ensuring document integrity.
                     </p>
                   </div>
                 </div>
@@ -453,7 +509,11 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                 <Clock className="w-5 h-5 text-blue-400" />
                 Audit Trail
               </h2>
-              {showAuditTrail ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              {showAuditTrail ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
             </button>
 
             {showAuditTrail && (
@@ -469,9 +529,13 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
                     <div className="flex-1 pb-6">
                       <div className="flex items-start justify-between mb-1">
                         <h3 className="text-white">{entry.action}</h3>
-                        <span className="text-gray-300 text-sm">{entry.timestamp}</span>
+                        <span className="text-gray-300 text-sm">
+                          {entry.timestamp}
+                        </span>
                       </div>
-                      <p className="text-gray-300 text-sm mb-1">By: {entry.user}</p>
+                      <p className="text-gray-300 text-sm mb-1">
+                        By: {entry.user}
+                      </p>
                       <p className="text-gray-300 text-sm">{entry.details}</p>
                     </div>
                   </div>
@@ -485,8 +549,9 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
         <Alert className="mb-6 bg-yellow-500/10 border-yellow-500/30">
           <Lock className="h-5 w-5 text-yellow-400" />
           <AlertDescription className="text-yellow-100">
-            This is a secure, time-limited verification link. Do not share this link with others. 
-            If you believe you received this link in error, please contact the sender.
+            This is a secure, time-limited verification link. Do not share this
+            link with others. If you believe you received this link in error,
+            please contact the sender.
           </AlertDescription>
         </Alert>
 
@@ -498,7 +563,7 @@ export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
             className="flex-1 bg-green-600 hover:bg-green-700 text-white"
           >
             <CheckCircle2 className="w-5 h-5 mr-2" />
-            {verificationComplete ? 'Verification Complete' : 'Verify Document'}
+            {verificationComplete ? "Verification Complete" : "Verify Document"}
           </Button>
           <Button
             onClick={handleDownload}
