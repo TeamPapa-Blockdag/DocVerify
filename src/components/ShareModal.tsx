@@ -6,7 +6,13 @@ import { X, Mail, Copy, Check } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Switch } from "./ui/switch";
 import { Separator } from "./ui/separator";
 import { toast } from "sonner";
@@ -24,14 +30,18 @@ interface ShareData {
   requirePassword: boolean;
 }
 
-export function ShareModal({ documentName, onClose, onShare }: ShareModalProps) {
+export function ShareModal({
+  documentName,
+  onClose,
+  onShare,
+}: ShareModalProps) {
   const [email, setEmail] = useState("");
   const [expiryDays, setExpiryDays] = useState("7");
   const [allowDownload, setAllowDownload] = useState(true);
   const [requirePassword, setRequirePassword] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const shareLink = `https://docverify.app/share/a7b3f9d2`;
+  const shareLink = `https://doc-verify-eight.vercel.app/document-review`;
 
   const handleShare = () => {
     if (!email) {
@@ -115,21 +125,31 @@ export function ShareModal({ documentName, onClose, onShare }: ShareModalProps) 
           {/* Permissions */}
           <div className="space-y-4">
             <h3>Permissions</h3>
-            
+
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <Label>Allow Download</Label>
-                <p className="text-sm text-muted-foreground">Recipient can download the document</p>
+                <p className="text-sm text-muted-foreground">
+                  Recipient can download the document
+                </p>
               </div>
-              <Switch checked={allowDownload} onCheckedChange={setAllowDownload} />
+              <Switch
+                checked={allowDownload}
+                onCheckedChange={setAllowDownload}
+              />
             </div>
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <Label>Require Password</Label>
-                <p className="text-sm text-muted-foreground">Add extra security with a password</p>
+                <p className="text-sm text-muted-foreground">
+                  Add extra security with a password
+                </p>
               </div>
-              <Switch checked={requirePassword} onCheckedChange={setRequirePassword} />
+              <Switch
+                checked={requirePassword}
+                onCheckedChange={setRequirePassword}
+              />
             </div>
           </div>
 
@@ -140,8 +160,16 @@ export function ShareModal({ documentName, onClose, onShare }: ShareModalProps) 
             <Label>Share Link</Label>
             <div className="flex gap-2">
               <Input value={shareLink} readOnly className="flex-1" />
-              <Button variant="outline" onClick={handleCopyLink} className="gap-2">
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              <Button
+                variant="outline"
+                onClick={handleCopyLink}
+                className="gap-2"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </Button>
             </div>
             <p className="text-sm text-muted-foreground">

@@ -494,7 +494,7 @@ export default function App() {
       <Toaster />
 
       {currentView === "document-review" && (
-        <DocumentReviewPage onBack={() => setCurrentView("dashboard")} />
+        <DocumentReviewPage  />
       )}
     </div>
   );
