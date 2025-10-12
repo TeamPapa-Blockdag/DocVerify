@@ -6,10 +6,13 @@ import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 
 interface LandingPageProps {
-  onGetStarted: () => void;
+  // onGetStarted: () => void;
+  onSignupClick: () => void;
+  onLoginClick: () => void;
+  // onLogoClick: () => void;
 }
 
-export function LandingPage({ onGetStarted }: LandingPageProps) {
+export function LandingPage({ onSignupClick }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
@@ -38,7 +41,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             >
               Pricing
             </a>
-            <Button onClick={onGetStarted}>Get Started</Button>
+            <Button onClick={onSignupClick}>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -65,7 +68,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             and employers worldwide.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="gap-2" onClick={onGetStarted}>
+            <Button size="lg" className="gap-2" onClick={onSignupClick}>
               Get Started Free
               <ArrowRight className="w-4 h-4" />
             </Button>
@@ -285,7 +288,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                   size="lg"
                   variant="secondary"
                   className="gap-2"
-                  onClick={onGetStarted}
+                  onClick={onSignupClick}
                 >
                   Start Free Trial
                   <ArrowRight className="w-4 h-4" />
