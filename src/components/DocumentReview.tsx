@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useState } from "react";
 import {
   CheckCircle2,
@@ -28,11 +26,11 @@ import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { toast } from "sonner";
 
-interface DocumentReviewPageProps {
-  onBack?: () => void;
-}
+// interface DocumentReviewPageProps {
+//   onBack?: () => void;
+// }
 
-export function DocumentReviewPage({ onBack }: DocumentReviewPageProps) {
+export function DocumentReviewPage() {
   // Two-step verification states
   const [isTokenVerified, setIsTokenVerified] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
