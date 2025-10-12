@@ -147,7 +147,7 @@ export default function App() {
     setShowShareModal(true);
   };
 
-  const handleShare = (data: any) => {
+  const handleShare = (data: unknown) => {
     console.log("Sharing document with:", data);
     setShowShareModal(false);
   };
