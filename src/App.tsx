@@ -15,6 +15,9 @@ import { MarketingOnePager } from "./components/MarketingOnePager";
 import { UploadProgress } from "./components/UploadProgress";
 import { Button } from "./components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import { DocumentReviewPage } from "./components/DocumentReview";
+// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
 import {
   Menu,
   X,
@@ -49,7 +52,8 @@ type View =
   | "audit-trail"
   | "security-settings"
   | "email-template"
-  | "marketing-pager";
+  | "marketing-pager"
+  | "document-review";
 
 interface Document {
   id: string;
@@ -237,6 +241,11 @@ export default function App() {
     {
       label: "Marketing One-Pager",
       view: "marketing-pager" as View,
+      icon: <FileText className="w-4 h-4" />,
+    },
+    {
+      label: "Document Review",
+      view: "document-review" as View,
       icon: <FileText className="w-4 h-4" />,
     },
   ];
@@ -483,6 +492,10 @@ export default function App() {
       )}
 
       <Toaster />
+
+      {currentView === "document-review" && (
+        <DocumentReviewPage  />
+      )}
     </div>
   );
 }
