@@ -1,27 +1,26 @@
 import { motion } from "motion/react";
 import { ShareIcon, VerifyIcon, BlockchainIcon } from "./icons";
-import { Mail, Calendar, ExternalLink } from "lucide-react";
+import {Calendar, ExternalLink } from "lucide-react";
+// import { Mail, Calendar, ExternalLink } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 
 export function EmailTemplate() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
-      <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Mail className="w-8 h-8 text-blue-600" />
-            <h1>Email Template Preview</h1>
-          </div>
-          <p className="text-muted-foreground">
-            This is what recipients see when you share a document
-          </p>
-        </motion.div>
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.98), rgba(239, 246, 255, 0.98)), url('https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwbmV0d29ya3xlbnwxfHx8fDE3NjAyMTkyNjl8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-white">Email Template Preview</h1>
+          <p className="text-white/80">Document sharing notification</p>
+        </div>
 
         {/* Email Preview */}
         <motion.div

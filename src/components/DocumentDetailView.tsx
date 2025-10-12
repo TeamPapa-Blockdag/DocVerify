@@ -1,13 +1,13 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Download, ExternalLink, Clock, User } from "lucide-react";
+import { ArrowLeft, ExternalLink, Clock, User } from "lucide-react";
 // import { ArrowLeft, Download, ExternalLink, Clock, User, Calendar } from "lucide-react";
-
 import { ShareIcon, VerifyIcon, RevokeIcon, BlockchainIcon } from "./icons";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface Document {
   id: string;
@@ -18,6 +18,12 @@ interface Document {
   status: "verified" | "pending" | "shared";
   blockchainHash: string;
   shares: number;
+  owner: {
+    name: string;
+    email: string;
+    avatar?: string;
+    initials: string;
+  };
 }
 
 interface AuditEvent {
@@ -35,7 +41,12 @@ interface DocumentDetailViewProps {
   onViewAuditTrail: () => void;
 }
 
-export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail }: DocumentDetailViewProps) {
+export function DocumentDetailView({
+  document,
+  onBack,
+  onShare,
+  onViewAuditTrail,
+}: DocumentDetailViewProps) {
   const auditEvents: AuditEvent[] = [
     {
       id: "1",
@@ -68,42 +79,25 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+    <div
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.97), rgba(239, 246, 255, 0.97)), url('https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcnlwdG9jdXJyZW5jeSUyMGJsb2NrY2hhaW58ZW58MXx8fHwxNzYwMTU4MjI5fDA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="mb-6 gap-2 text-white hover:bg-white/10"
         >
-          <Button variant="ghost" onClick={onBack} className="gap-2 mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Documents
-          </Button>
-
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h1 className="mb-2">{document.name}</h1>
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <span>{document.size}</span>
-                <span>•</span>
-                <span>{document.type}</span>
-                <span>•</span>
-                <span>Uploaded {document.uploadDate}</span>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" className="gap-2">
-                <Download className="w-4 h-4" />
-                Download
-              </Button>
-              <Button onClick={onShare} className="gap-2">
-                <ShareIcon size={16} />
-                Share
-              </Button>
-            </div>
-          </div>
-        </motion.div>
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Button>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -133,6 +127,28 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
+            {/* Owner Card */}
+            <Card className="p-6">
+              <h3 className="mb-4">Document Owner</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarImage
+                    src={document.owner.avatar}
+                    alt={document.owner.name}
+                  />
+                  <AvatarFallback className="bg-blue-100 text-blue-600">
+                    {document.owner.initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <p className="font-medium">{document.owner.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {document.owner.email}
+                  </p>
+                </div>
+              </div>
+            </Card>
+
             {/* Status Card */}
             <Card className="p-6">
               <h3 className="mb-4">Status</h3>
@@ -162,8 +178,12 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
                 This document is permanently anchored on BlockDAG
               </p>
               <div className="bg-white/50 rounded-lg p-3 mb-4">
-                <p className="text-xs text-muted-foreground mb-1">Transaction Hash</p>
-                <code className="text-sm break-all">{document.blockchainHash}</code>
+                <p className="text-xs text-muted-foreground mb-1">
+                  Transaction Hash
+                </p>
+                <code className="text-sm break-all">
+                  {document.blockchainHash}
+                </code>
               </div>
               <Button variant="outline" size="sm" className="w-full gap-2">
                 <ExternalLink className="w-4 h-4" />
@@ -175,15 +195,26 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
             <Card className="p-6">
               <h3 className="mb-4">Quick Actions</h3>
               <div className="space-y-2">
-                <Button variant="outline" className="w-full justify-start gap-2" onClick={onShare}>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={onShare}
+                >
                   <ShareIcon size={16} />
                   Share Document
                 </Button>
-                <Button variant="outline" className="w-full justify-start gap-2" onClick={onViewAuditTrail}>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={onViewAuditTrail}
+                >
                   <Clock className="w-4 h-4" />
                   View Audit Trail
                 </Button>
-                <Button variant="outline" className="w-full justify-start gap-2 text-destructive hover:text-destructive">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 text-destructive hover:text-destructive"
+                >
                   <RevokeIcon size={16} />
                   Revoke Access
                 </Button>
@@ -206,10 +237,18 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
                 <div key={event.id} className="flex gap-4">
                   <div className="relative">
                     <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      {event.action === "Document Uploaded" && <Upload className="w-4 h-4 text-blue-600" />}
-                      {event.action === "Blockchain Verified" && <VerifyIcon size={16} className="text-blue-600" />}
-                      {event.action === "Shared" && <ShareIcon size={16} className="text-blue-600" />}
-                      {event.action === "Viewed" && <User className="w-4 h-4 text-blue-600" />}
+                      {event.action === "Document Uploaded" && (
+                        <Upload className="w-4 h-4 text-blue-600" />
+                      )}
+                      {event.action === "Blockchain Verified" && (
+                        <VerifyIcon size={16} className="text-blue-600" />
+                      )}
+                      {event.action === "Shared" && (
+                        <ShareIcon size={16} className="text-blue-600" />
+                      )}
+                      {event.action === "Viewed" && (
+                        <User className="w-4 h-4 text-blue-600" />
+                      )}
                     </div>
                     {index < auditEvents.slice(0, 3).length - 1 && (
                       <div className="absolute left-1/2 top-8 w-px h-8 bg-border -translate-x-1/2" />
@@ -218,15 +257,25 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
                   <div className="flex-1 pb-4">
                     <div className="flex items-start justify-between mb-1">
                       <h4>{event.action}</h4>
-                      <span className="text-sm text-muted-foreground">{event.timestamp.split(" ")[1]}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {event.timestamp.split(" ")[1]}
+                      </span>
                     </div>
-                    <p className="text-muted-foreground mb-1">{event.details}</p>
-                    <p className="text-sm text-muted-foreground">by {event.user}</p>
+                    <p className="text-muted-foreground mb-1">
+                      {event.details}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      by {event.user}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
-            <Button variant="outline" className="w-full mt-4" onClick={onViewAuditTrail}>
+            <Button
+              variant="outline"
+              className="w-full mt-4"
+              onClick={onViewAuditTrail}
+            >
               View Full Audit Trail
             </Button>
           </Card>
@@ -237,13 +286,33 @@ export function DocumentDetailView({ document, onBack, onShare, onViewAuditTrail
 }
 
 const FileText = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    />
   </svg>
 );
 
 const Upload = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+    />
   </svg>
 );

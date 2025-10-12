@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +22,12 @@ interface Document {
   status: "verified" | "pending" | "shared";
   blockchainHash: string;
   shares: number;
+  owner: {
+    name: string;
+    email: string;
+    avatar?: string;
+    initials: string;
+  };
 }
 
 interface DashboardViewProps {
@@ -30,25 +37,26 @@ interface DashboardViewProps {
   onShareClick: (doc: Document) => void;
 }
 
-export function DashboardView({
-  documents,
-  onDocumentClick,
-  onUploadClick,
-  onShareClick,
-}: DashboardViewProps) {
+export function DashboardView({ documents, onDocumentClick, onUploadClick, onShareClick }: DashboardViewProps) {
   const isEmpty = documents.length === 0;
 
   if (isEmpty) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+      <div 
+        className="min-h-screen p-8 relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.98), rgba(239, 246, 255, 0.98)), url('https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwbmV0d29ya3xlbnwxfHx8fDE3NjAyMTkyNjl8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="mb-2">My Documents</h1>
-              <p className="text-muted-foreground">
-                Securely store and verify your documents on the blockchain
-              </p>
+              <h1 className="mb-2 text-white">My Documents</h1>
+              <p className="text-white/80">Securely store and verify your documents on the blockchain</p>
             </div>
             <Button onClick={onUploadClick} className="gap-2">
               <UploadIcon size={20} />
@@ -62,13 +70,12 @@ export function DashboardView({
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center py-32"
           >
-            <div className="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-              <FileText className="w-16 h-16 text-blue-600" />
+            <div className="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">
+              <FileText className="w-16 h-16 text-white" />
             </div>
-            <h2 className="mb-4">No documents yet</h2>
-            <p className="text-muted-foreground mb-8 text-center max-w-md">
-              Upload your first document to get started with secure,
-              blockchain-verified storage
+            <h2 className="mb-4 text-white">No documents yet</h2>
+            <p className="text-white/80 mb-8 text-center max-w-md">
+              Upload your first document to get started with secure, blockchain-verified storage
             </p>
             <Button onClick={onUploadClick} size="lg" className="gap-2">
               <UploadIcon size={20} />
@@ -81,15 +88,22 @@ export function DashboardView({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.98), rgba(239, 246, 255, 0.98)), url('https://images.unsplash.com/photo-1639322537231-2f206e06af84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwbmV0d29ya3xlbnwxfHx8fDE3NjAyMTkyNjl8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="mb-2">My Documents</h1>
-            <p className="text-muted-foreground">
-              {documents.length} document{documents.length !== 1 ? "s" : ""}{" "}
-              securely stored
+            <h1 className="mb-2 text-white">My Documents</h1>
+            <p className="text-white/80">
+              {documents.length} document{documents.length !== 1 ? "s" : ""} securely stored
             </p>
           </div>
           <Button onClick={onUploadClick} className="gap-2">
@@ -143,29 +157,16 @@ export function DashboardView({
                   </DropdownMenu>
                 </div>
 
-                <h3
-                  className="mb-2 truncate"
-                  onClick={() => onDocumentClick(doc)}
-                >
-                  {doc.name}
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  {doc.size} • {doc.type}
-                </p>
+                <h3 className="mb-2 truncate" onClick={() => onDocumentClick(doc)}>{doc.name}</h3>
+                <p className="text-muted-foreground mb-4">{doc.size} • {doc.type}</p>
 
                 <div className="flex items-center gap-2 mb-4">
                   <Badge
-                    variant={
-                      doc.status === "verified" ? "default" : "secondary"
-                    }
+                    variant={doc.status === "verified" ? "default" : "secondary"}
                     className="gap-1"
                   >
                     {doc.status === "verified" && <VerifyIcon size={12} />}
-                    {doc.status === "verified"
-                      ? "Verified"
-                      : doc.status === "shared"
-                      ? "Shared"
-                      : "Pending"}
+                    {doc.status === "verified" ? "Verified" : doc.status === "shared" ? "Shared" : "Pending"}
                   </Badge>
                   {doc.shares > 0 && (
                     <Badge variant="outline" className="gap-1">
@@ -173,6 +174,20 @@ export function DashboardView({
                       {doc.shares}
                     </Badge>
                   )}
+                </div>
+
+                {/* Owner Info */}
+                <div className="flex items-center gap-3 mb-4 pb-4 border-b">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={doc.owner.avatar} alt={doc.owner.name} />
+                    <AvatarFallback className="bg-blue-100 text-blue-600">
+                      {doc.owner.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm truncate">{doc.owner.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{doc.owner.email}</p>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">

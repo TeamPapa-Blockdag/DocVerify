@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Download, Filter } from "lucide-react";
+import { ArrowLeft, Filter } from "lucide-react";
+// import { ArrowLeft, Download, Filter } from "lucide-react";
 import { VerifyIcon, ShareIcon, RevokeIcon, BlockchainIcon } from "./icons";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -134,33 +135,33 @@ export function AuditTrailViewer({ documentName, onBack }: AuditTrailViewerProps
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.97), rgba(239, 246, 255, 0.97)), url('https://images.unsplash.com/photo-1631864032173-c2f015fe3459?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwZGF0YXxlbnwxfHx8fDE3NjAxMTUyOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="mb-6 gap-2 text-white hover:bg-white/10"
         >
-          <Button variant="ghost" onClick={onBack} className="gap-2 mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
+          <ArrowLeft className="w-4 h-4" />
+          Back to Document
+        </Button>
 
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="mb-2">Audit Trail</h1>
-              <p className="text-muted-foreground">{documentName}</p>
-              <p className="text-muted-foreground">
-                Complete timeline of all document activities
-              </p>
-            </div>
-            <Button variant="outline" className="gap-2">
-              <Download className="w-4 h-4" />
-              Export Report
-            </Button>
-          </div>
-        </motion.div>
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="mb-2 text-white">Audit Trail</h1>
+          <p className="text-white/80">
+            Complete history for {documentName}
+          </p>
+        </div>
 
         {/* Filters */}
         <motion.div
