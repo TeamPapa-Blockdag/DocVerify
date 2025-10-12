@@ -2,14 +2,38 @@ import { motion } from "motion/react";
 import { Shield, Zap, Lock, Globe, Check, ArrowRight } from "lucide-react";
 import { UploadIcon, ShareIcon, VerifyIcon} from "./icons";
 // import { UploadIcon, ShareIcon, VerifyIcon, BlockchainIcon } from "./icons";
-
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 
 export function MarketingOnePager() {
   return (
-    <div className="min-h-screen bg-white">
+    <div 
+      className="min-h-screen relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98)), url('https://images.unsplash.com/photo-1694219782948-afcab5c095d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NjAxNzEyMTV8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Hero Section */}
+      <section className="py-20 px-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Shield className="w-16 h-16 text-white" />
+            <span className="text-4xl text-white">DocVerify</span>
+          </div>
+          <h1 className="text-6xl mb-6 text-white">
+            Blockchain-Powered
+            <br />
+            Document Verification
+          </h1>
+          <p className="text-2xl text-white/80 mb-8 max-w-3xl mx-auto">
+            Secure, verify, and share your credentials with unparalleled trust and transparency
+          </p>
+        </div>
+      </section>
+
       {/* Page Container with Print Styling */}
       <div className="max-w-[8.5in] mx-auto bg-white p-12">
         {/* Header */}

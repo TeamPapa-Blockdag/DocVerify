@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import { ShareIcon } from "./icons";
 import { X, Mail, Copy, Check } from "lucide-react";
 // import { X, Mail, Calendar, Copy, Check } from "lucide-react";
-
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";

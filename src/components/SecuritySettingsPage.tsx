@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { ArrowLeft, Key, Download, Copy, Shield, AlertTriangle, Lock, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Key, Download, Copy, AlertTriangle, Lock, Eye, EyeOff } from "lucide-react";
+// import { ArrowLeft, Key, Download, Copy, Shield, AlertTriangle, Lock, Eye, EyeOff } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Input } from "./ui/input";
@@ -33,27 +34,33 @@ export function SecuritySettingsPage({ onBack }: SecuritySettingsPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.97), rgba(239, 246, 255, 0.97)), url('https://images.unsplash.com/photo-1639182697243-9641e4b2f4b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwYmxvY2tjaGFpbnxlbnwxfHx8fDE3NjAyMTk0MjF8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+        {/* Back Button */}
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="mb-6 gap-2 text-white hover:bg-white/10"
         >
-          <Button variant="ghost" onClick={onBack} className="gap-2 mb-4">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
-          </Button>
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Button>
 
-          <div className="flex items-center gap-3 mb-2">
-            <Shield className="w-8 h-8 text-blue-600" />
-            <h1>Security Settings</h1>
-          </div>
-          <p className="text-muted-foreground">
-            Manage your encryption keys and security preferences
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="mb-2 text-white">Security Settings</h1>
+          <p className="text-white/80">
+            Manage your account security and authentication preferences
           </p>
-        </motion.div>
+        </div>
 
         {/* Warning Alert */}
         <motion.div

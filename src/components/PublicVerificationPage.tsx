@@ -4,7 +4,6 @@ import { Check, X, ExternalLink, Download, Shield, Calendar, FileText } from "lu
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 // import { Badge } from "./ui/badge";
-// import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
 
 export function PublicVerificationPage() {
@@ -20,22 +19,27 @@ export function PublicVerificationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+    <div 
+      className="min-h-screen p-8 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(248, 250, 252, 0.97), rgba(239, 246, 255, 0.97)), url('https://images.unsplash.com/photo-1694219782948-afcab5c095d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NjAxNzEyMTV8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
+        <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Shield className="w-8 h-8 text-blue-600" />
-            <h1>Document Verification</h1>
+            <Shield className="w-12 h-12 text-white" />
+            <span className="text-3xl text-white">DocVerify</span>
           </div>
-          <p className="text-muted-foreground">
-            Blockchain-verified credential authentication
+          <h1 className="mb-4 text-white">Document Verification</h1>
+          <p className="text-white/80 text-lg">
+            Verify the authenticity of blockchain-anchored documents
           </p>
-        </motion.div>
+        </div>
 
         {/* Verification Status */}
         <motion.div
